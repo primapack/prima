@@ -120,4 +120,23 @@ jobs:
                 setenv('MW_MINGW64_LOC', 'C:\ProgramData\mingw64\mingw64');
                 mex('-setup', '-v', 'fortran');
             end
-            cd matlab/tests; testprima_ex();
+            root_dir = pwd();
+            cd(fullfile(root_dir, 'matlab/tests'));
+            try
+              parfor i = 1:1
+                  testprima_ex();
+              end
+            catch exception
+              % Copy the crash dump files to root_dir if exceptions occur.
+              copy_crash_dump_files(root_dir, true)
+              dir(root_dir)
+              rethrow(exception);
+            end
+
+      - name: Store artifacts
+        uses: actions/upload-artifact@v7
+        if: always()  # Always run even if the workflow is canceled manually or due to overtime.
+        with:
+          name: ${{ matrix.solver }}
+          path: |
+            matlab_crash_dump*
