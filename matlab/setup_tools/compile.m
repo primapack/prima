@@ -101,8 +101,7 @@ if contains(compiler_manufacturer, 'gnu')  % gfortran
         gcc_version = getMexLibgcc().latestGccVersion;  % Latest gcc version string embedded in libgcc
     catch exception
         gcc_version = '';
-        % As of 20250902, getMexLibgcc supports only Linux.
-        if verbose && isunix && ~ismac
+        if verbose
             warning('prima:FailToGetGccVersion', 'Fail to get the version of libgcc: %s', exception.message);
         end
     end
