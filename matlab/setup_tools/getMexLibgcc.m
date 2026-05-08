@@ -5,14 +5,14 @@ function info = getMexLibgcc()
 %   libgccStrings: strings embedded in libgcc_s.so.1 (a string separated by line breaks); empty if not detectable
 %   latestGccVersion: latest GCC version string embedded in libgcc_s.so.1 (e.g., '14.0.0'); empty if not detectable
 %
-% Requirements: Windows with MinGW or Linux, ldd, strings, grep, tail. No root needed.
+% Requirements: Linux, ldd, strings, grep, tail. No root needed.
 
     % Get name of the current function
     callstack = dbstack;
     funName = callstack(1).name;
 
     % Preconditions
-    assert(ispc || (isunix && ~ismac), sprintf('%s: This function targets Windows (with MinGW) and Linux.', funName));
+    assert(isunix && ~ismac, sprintf('%s: This function targets Linux.', funName));
     assert(isCommandAvailable('ldd'), sprintf('%s: ldd command not found.', funName));
     assert(isCommandAvailable('strings'), sprintf('%s: strings command not found.', funName));
     assert(isCommandAvailable('grep'), sprintf('%s: grep command not found.', funName));
