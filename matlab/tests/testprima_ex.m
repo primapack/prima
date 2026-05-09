@@ -10,11 +10,11 @@ options.debug = true;
 options.verbose = true;
 setup(options);
 prima('info')
-testprima(false, 1.0e-10, 100);
+testprima(true, 1.0e-10, 100);
 setup
 setup path
 prima('info')
-testprima(false, 1.0e-10, 100);
+testprima(true, 1.0e-10, 100);
 setup cobyla
 setup uobyqa
 setup newuoa
