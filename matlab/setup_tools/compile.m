@@ -131,16 +131,17 @@ end
 
 % Finally, set `compiler_options` so that `extra_compiler_options` is appended to the compiler flags
 % when MEX is called  with `compiler_options`. See Append Compiler Options in
-% https://www.mathworks.com/help/matlab/ref/mex.html
+% https://www.mathworks.com/help/matlab/ref/mex.html , particularly for what `flags_name` should be.
 % N.B.: on Windows with MinGW, the compiler is gfortran, and the option should be passed via
-% FCFLAGS rather than COMPFLAGS.
+% FCFLAGS rather than COMPFLAGS. This seems to be undocumented.
 if ispc && contains(compiler_manufacturer, 'intel')  % on Windows with Microsoft Visual Studio compilers
-    compiler_options = ['COMPFLAGS="$COMPFLAGS ', extra_compiler_options, '"'];
+    flags_name = 'COMPFLAGS';
 elseif ispc && contains(compiler_manufacturer, 'gnu')  % on Windows with MinGW
-    compiler_options = ['FCFLAGS="$FCFLAGS ', extra_compiler_options, '"'];
+    flags_name = 'FCFLAGS';
 else  % with MinGW (on Windows), macOS, and Linux compilers
-    compiler_options = ['FFLAGS="$FFLAGS ', extra_compiler_options, '"'];
+    flags_name = 'FFLAGS';
 end
+compiler_options = append_flags(flags_name, extra_compiler_options);
 
 % Zaikun 20240216: The following is a workaround for https://github.com/libprima/prima/issues/161,
 % where MEX fails due to incompatibility between the new linker of Xcode 15 on macOS and Intel oneAPI 2023.
@@ -150,7 +151,7 @@ end
 % the latter is suggested at https://www.mathworks.com/help/matlab/ref/mex.html.
 linker_options = '';
 if ismac && contains(compiler_manufacturer, 'intel')  % macOS with Intel compiler
-    linker_options = 'LDFLAGSVER="$LDFLAGSVER -undefined dynamic_lookup"';
+    linker_options = append_flags('LDFLAGSVER', '-undefined dynamic_lookup');
 end
 
 % MEX options shared by all compiling processes below.
@@ -409,5 +410,14 @@ function modo_files = list_modo_files(dir_name)
 %LIST_MODO_FILES lists all module or object files in a directory
 
 modo_files = [list_mod_files(dir_name), list_obj_files(dir_name)];
+
+return
+
+
+function flags = append_flags(flags_name, extra_flags)
+%APPEND_FLAGS returns a string that can be passed to MEX to append `extra_flags` to the existing
+% flags specified by `flags_name`.
+
+flags = [flags_name, '="$', flags_name, ' ', extra_flags, '"'];
 
 return
