@@ -102,8 +102,6 @@ else
     clflag_list = {true, false}; % clflag: call the solvers in classical mode (true) or not (false)
 end
 
-clflag_list = {true}; % For test
-
 for irun = 1 : nrun
     fprintf ('\n');
     if (nrun > 1)
