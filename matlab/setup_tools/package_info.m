@@ -2,9 +2,9 @@ function information = package_info(request)
 %PACKAGE_INFO returns information about the package.
 %
 %   ***********************************************************************
-%   Author:     Zaikun ZHANG (zaikun.zhang@polyu.edu.hk)
-%               Department of Applied Mathematics,
-%               The Hong Kong Polytechnic University
+%   Author:     Zaikun ZHANG (www.zhangzk.net)
+%               School of Mathematics,
+%               Sun Yat-sen University, China
 %
 %   Dedicated to the late Professor M. J. D. Powell FRS (1936--2015).
 %   ***********************************************************************
@@ -35,7 +35,7 @@ about = 'PRIMA: Reference Implementation for Powell''s methods with Modernizatio
 
 author = 'Zaikun Zhang';
 
-email = 'zaikun.zhang@polyu.edu.hk';
+email = 'zaikunzhang@gmail.com';
 
 url = 'www.libprima.net';
 

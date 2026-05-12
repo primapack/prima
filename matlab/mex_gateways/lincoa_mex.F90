@@ -2,16 +2,14 @@
 ! The MEX gateway for LINCOA
 !
 ! Authors:
-!   Tom M. RAGONNEAU (tom.ragonneau@connect.polyu.hk)
-!   and Zaikun ZHANG (zaikun.zhang@polyu.edu.hk)
-!   Department of Applied Mathematics,
-!   The Hong Kong Polytechnic University
+!   Tom M. RAGONNEAU (tom.ragonneau@gmail.com)
+!   and Zaikun ZHANG (www.zhangzk.net)
 !
 ! Dedicated to the late Professor M. J. D. Powell FRS (1936--2015)
 !
 ! Started in July 2020
 !
-! Last Modified: Sunday, April 07, 2024 PM04:31:37
+! Last Modified: Tue 12 May 2026 04:47:40 PM CST
 !--------------------------------------------------------------------------------------------------!
 
 #include "fintrf.h"

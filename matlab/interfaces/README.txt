@@ -1,10 +1,9 @@
 This directory contains the MATLAB interfaces for PRIMA.
 
-Authors:
-  Tom M. RAGONNEAU (tom.ragonneau@connect.polyu.hk)
-  and Zaikun ZHANG (zaikun.zhang@polyu.edu.hk)
-  Department of Applied Mathematics,
-  The Hong Kong Polytechnic University
+Author:
+  Zaikun ZHANG (www.zhangzk.net)
+  School of Mathematics,
+  Sun Yat-sen University, China.
 
 Dedicated to the late Professor M. J. D. Powell FRS (1936--2015).
 

@@ -11,16 +11,14 @@
 ! https://stackoverflow.com/questions/79705107/fortran-implementating-a-parametrized-objective-function-without-using-module-v
 !
 ! Authors:
-!   Tom M. RAGONNEAU (tom.ragonneau@connect.polyu.hk)
-!   and Zaikun ZHANG (zaikun.zhang@polyu.edu.hk)
-!   Department of Applied Mathematics, 
-!   The Hong Kong Polytechnic University
+!   Tom M. RAGONNEAU (tom.ragonneau@gmail.com)
+!   and Zaikun ZHANG (www.zhangzk.net)
 !
 ! Dedicated to the late Professor M. J. D. Powell FRS (1936--2015)
 !
 ! Started in July 2020
 !
-! Last Modified: Sun 20 Jul 2025 08:30:42 AM PDT
+! Last Modified: Tue 12 May 2026 04:52:57 PM CST
 !--------------------------------------------------------------------------------------------------!
 
 #include "fintrf.h"
