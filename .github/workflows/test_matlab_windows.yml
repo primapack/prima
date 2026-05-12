@@ -23,9 +23,11 @@ jobs:
         os: [windows-2022, windows-latest]
         matlab: [R2023a, R2024a, latest]  # The earliest and latest supported versions of MATLAB
         compiler: [intel, mingw]
+        mingw: [8.1, 14.2]
         exclude:
-          # As of 20260507 and MATLAB R2026a, MEX does not work on windows-latest due to the version
-          # of MS Visual Studio, which is Visual Studio 2026 on windows-latest as of 20260507.
+          # As of 20260507 and MATLAB R2026a, MEX does not work on windows-latest with Intel
+          # compilers due to the version of MS Visual Studio, which is Visual Studio 2026 on
+          # windows-latest as of 20260507.
           - os: windows-latest
             compiler: intel
           # The earliest version of MATLAB supporting MinGW is R2024a.
@@ -34,6 +36,12 @@ jobs:
           # The earliest version of MATLAB supporting OneAPI is R2023a.
           - matlab: R2024a
             compiler: intel
+
+          # mingw is for specifying the version of MinGW to use.
+          - compiler: intel
+            mingw: 8.1
+          - compiler: intel
+            mingw: 14.2
 
     steps:
 
@@ -103,7 +111,8 @@ jobs:
       - name: Install MinGW on Windows
         shell: bash
         if: startsWith(matrix.os, 'windows') && matrix.compiler == 'mingw'
-        run: choco install mingw -y --no-progress && choco upgrade mingw -y --no-progress
+        #run: choco install mingw -y --no-progress && choco upgrade mingw -y --no-progress
+        run: choco install mingw --version=${{ matrix.mingw }} -y --no-progress
 
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v3.0.1
@@ -123,7 +132,5 @@ jobs:
             root_dir = pwd();
             cd(fullfile(root_dir, 'matlab/tests'));
             test_classical = true;
-            % With MinGW, if we set verbose to true, MATLAB will crash with the message "ERROR: MATLAB error Exit Status: 0xc0000409".
-            % To be investigated whether this is a bug of MATLAB or MinGW. Setting verbose to false is a workaround.
-            verbose = ~strcmpi('${{ matrix.compiler }}', 'mingw');
+            verbose = true;
             testprima_ex(test_classical, verbose);
