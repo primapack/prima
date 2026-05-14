@@ -123,7 +123,7 @@ jobs:
             if strcmpi('${{ matrix.compiler }}', 'mingw')
                 if exist('C:\ProgramData\mingw64\mingw64', 'dir')
                     setenv('MW_MINGW64_LOC', 'C:\ProgramData\mingw64\mingw64');
-                else if exist('C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64', 'dir')
+                elseif exist('C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64', 'dir')
                     setenv('MW_MINGW64_LOC', 'C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64')
                 else
                     error('MinGW is not found. Please check the installation path of MinGW and set MW_MINGW64_LOC environment variable accordingly.');
