@@ -87,8 +87,8 @@ extra_compiler_options = '';
 if contains(compiler_manufacturer, 'gnu')  % gfortran
     % 1. -Wno-missing-include-dirs is needed to suppress the warning about missing include directories
     % when Simulink is not installed. Note the space before the new options.
-    % 2. Due to a bug of MinGW 7 on Windows, `-g` causes "internal compiler error: in based_loc_descr, at dwarf2out.c:14264"
-    if ispc && compiler_major_version == 7
+    % 2. Due to a bug of MinGW 8 on Windows, `-g` causes "internal compiler error: in based_loc_descr, at dwarf2out.c:14264"
+    if ispc && compiler_major_version == 8
         extra_compiler_options = [extra_compiler_options, ' -Wno-missing-include-dirs -fno-stack-arrays -frecursive'];
     else
         extra_compiler_options = [extra_compiler_options, ' -g -Wno-missing-include-dirs -fno-stack-arrays -frecursive'];
