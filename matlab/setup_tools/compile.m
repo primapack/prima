@@ -159,6 +159,8 @@ if ismac && contains(compiler_manufacturer, 'intel')  % macOS with Intel compile
     linker_options = append_flags('LDFLAGSVER', '-undefined dynamic_lookup');
 end
 
+linker_options = append_flags('LDFLAGSVER', '-fsanitize=undefined');
+
 % MEX options shared by all compiling processes below.
 common_mex_options = {verbose_option, compiler_options, linker_options};
 
