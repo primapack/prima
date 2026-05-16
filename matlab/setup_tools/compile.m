@@ -93,7 +93,7 @@ if contains(compiler_manufacturer, 'gnu')  % gfortran
     end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %extra_compiler_options = [extra_compiler_options, ' -Wno-missing-include-dirs -fno-stack-arrays -frecursive'];
-    extra_compiler_options = [extra_compiler_options, ' -Wno-missing-include-dirs -fno-stack-arrays -frecursive -fcheck=all -fbacktrace -fsanitize=undefined'];
+    extra_compiler_options = [extra_compiler_options, ' -Wno-missing-include-dirs -fno-stack-arrays -frecursive -fcheck=all -fbacktrace'];
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % -ftrampoline-impl=heap instructs the compiler to put the trampolines on the heap instead of the
@@ -154,14 +154,13 @@ compiler_options = append_flags(flags_name, extra_compiler_options);
 % where MEX fails due to incompatibility between the new linker of Xcode 15 on macOS and Intel oneAPI 2023.
 % The fix is to replace the linker option "-undefined error" with "-undefined dynamic_lookup".
 % See also https://github.com/libprima/prima/issues/158.
-% Note that we have to modify `LDFLAGSVER`. Setting `LDFLAGS` or `LINKFLAGS` does not work, although
-% the latter is suggested at https://www.mathworks.com/help/matlab/ref/mex.html.
+% Note that the name of the flag to modify depends on the platform. On macOS with Intel compiler, we
+% have to modify `LDFLAGSVER`; on Windows with MinGW, it is `FFLAGS`. Setting `LDFLAGS` or `LINKFLAGS`
+% does not work, although the latter is suggested at https://www.mathworks.com/help/matlab/ref/mex.html.
 linker_options = '';
 if ismac && contains(compiler_manufacturer, 'intel')  % macOS with Intel compiler
     linker_options = append_flags('LDFLAGSVER', '-undefined dynamic_lookup');
 end
-
-linker_options = append_flags('FFLAGS', '-fsanitize=undefined');
 
 % MEX options shared by all compiling processes below.
 common_mex_options = {verbose_option, compiler_options, linker_options};
