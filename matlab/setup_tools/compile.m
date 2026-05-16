@@ -91,8 +91,10 @@ if contains(compiler_manufacturer, 'gnu')  % gfortran
     if ispc && compiler_major_version ~= 8
         extra_compiler_options = [extra_compiler_options, ' -g'];
     end
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %extra_compiler_options = [extra_compiler_options, ' -Wno-missing-include-dirs -fno-stack-arrays -frecursive'];
     extra_compiler_options = [extra_compiler_options, ' -Wno-missing-include-dirs -fno-stack-arrays -frecursive -fcheck=all -fbacktrace -fsanitize=undefined'];
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % -ftrampoline-impl=heap instructs the compiler to put the trampolines on the heap instead of the
     % stack. This option is available since gcc/gfortran 14. Without this option, executable stacks
@@ -143,7 +145,7 @@ if ispc && contains(compiler_manufacturer, 'intel')  % on Windows with Microsoft
     flags_name = 'COMPFLAGS';
 elseif ispc && contains(compiler_manufacturer, 'gnu')  % on Windows with MinGW
     flags_name = 'FCFLAGS';
-else  % with MinGW (on Windows), macOS, and Linux compilers
+else  % with macOS, and Linux compilers
     flags_name = 'FFLAGS';
 end
 compiler_options = append_flags(flags_name, extra_compiler_options);
@@ -159,7 +161,7 @@ if ismac && contains(compiler_manufacturer, 'intel')  % macOS with Intel compile
     linker_options = append_flags('LDFLAGSVER', '-undefined dynamic_lookup');
 end
 
-linker_options = append_flags('LDFLAGSVER', '-fsanitize=undefined');
+linker_options = append_flags('FFLAGS', '-fsanitize=undefined');
 
 % MEX options shared by all compiling processes below.
 common_mex_options = {verbose_option, compiler_options, linker_options};
